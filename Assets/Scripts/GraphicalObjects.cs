@@ -1,0 +1,127 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public abstract class GraphicalObject
+{
+    protected GameObject graphicalObject;
+    protected Warehouse warehouse;
+
+    protected MeshFilter meshFilter;
+    protected MeshRenderer meshRenderer;
+
+    protected Material material;
+
+    protected List<Vector3> verts;
+    protected List<int> triangles;
+    protected List<Vector2> uvs;
+
+    protected Vector3 position;
+    public GraphicalObject(Warehouse warehouse, Vector3 position, Material material)
+    {
+        graphicalObject = new GameObject();
+        this.warehouse = warehouse;
+
+
+        this.material = material;
+        graphicalObject.transform.SetParent(this.warehouse.transform);
+
+        this.position = position;
+
+        meshFilter = graphicalObject.AddComponent<MeshFilter>();
+        meshRenderer = graphicalObject.AddComponent<MeshRenderer>();
+
+        verts = new List<Vector3>();
+        triangles = new List<int>();
+        uvs = new List<Vector2>();
+    }
+    public abstract void GenerateMesh();
+    public void UpdateMesh()
+    {
+        Mesh mesh = new Mesh();
+        mesh.vertices = verts.ToArray();
+        mesh.triangles = triangles.ToArray();
+        mesh.uv = uvs.ToArray();
+        mesh.RecalculateNormals();
+        meshFilter.mesh = mesh;
+        meshRenderer.material = material;
+    }
+}
+public class Floor : GraphicalObject
+{
+    protected Vector3 floorEnd;
+    public Floor(Warehouse warehouse, Vector3 position, Vector3 floorEnd, Material material)
+        : base(warehouse, position, material)
+    {
+        this.floorEnd = floorEnd;
+        graphicalObject.name = "Floor" + position.x + "," + position.z;
+        GenerateMesh();
+        UpdateMesh();
+    }
+    public override void GenerateMesh()
+    {
+        verts.Add(position);
+        verts.Add(new Vector3(floorEnd.x, 0, position.z));
+        verts.Add(new Vector3(position.x, 0, floorEnd.z));
+        verts.Add(new Vector3(floorEnd.x, 0, floorEnd.z));
+
+        triangles.Add(1);
+        triangles.Add(0);
+        triangles.Add(2);
+        triangles.Add(1);
+        triangles.Add(2);
+        triangles.Add(3);
+
+        for (int i = 0; i < verts.Count; i++)
+        {
+            uvs.Add(new Vector2(verts[i].x, verts[i].z));
+        }
+    }
+
+}
+public class Wall : GraphicalObject
+{
+    protected Vector3 endWall;
+    protected float height;
+    public Wall(Warehouse warehouse, Vector3 position, Vector3 endWall, Material material, float height)
+        : base(warehouse, position, material)
+    {
+        this.endWall = endWall;
+        this.height = height;
+        graphicalObject.name = "Wall" + position.x + "," + position.z;
+        GenerateMesh();
+        UpdateMesh();
+    }
+    public override void GenerateMesh()
+    {
+        verts.Add(position);
+        verts.Add(new Vector3(endWall.x, 0, endWall.z));
+        verts.Add(new Vector3(position.x, height, position.z));
+        verts.Add(new Vector3(endWall.x, height, endWall.z));
+
+        triangles.Add(2);
+        triangles.Add(0);
+        triangles.Add(1);
+        triangles.Add(3);
+        triangles.Add(2);
+        triangles.Add(1);
+
+
+        for (int i = 0; i < verts.Count; i++)
+        {
+            uvs.Add(new Vector2(verts[i].x, verts[i].z));
+        }
+    }
+
+}
+public class InteractableObject : GraphicalObject
+{
+    public InteractableObject(Warehouse warehouse, Vector3 position, Material material) : base(warehouse, position, material)
+    {
+
+    }
+    public override void GenerateMesh()
+    {
+        throw new System.NotImplementedException();
+    }
+}
