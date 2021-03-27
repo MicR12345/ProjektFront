@@ -7,7 +7,6 @@ public class WarehouseBuilder : MonoBehaviour
     GameObject warehouseObject;
     Warehouse warehouse;
     List<GraphicalObject> graphicalObjects;
-    List<InteractableObject> interactableObjects;
 
     public void Initialize(Warehouse warehouse)
     {

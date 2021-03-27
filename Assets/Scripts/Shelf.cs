@@ -18,6 +18,7 @@ public class Shelf : GraphicalObject
         this.size = size;
         sectors = new List<Sector>();
         graphicalObject.name = "Shelf" + position.x + "," + position.z;
+
         this.packageMaterial = packageMaterial;
         this.rotation = rotation;
         //Debug package list

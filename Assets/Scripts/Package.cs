@@ -35,6 +35,7 @@ public class PackageObject : GraphicalObject,InteractableObject
 
         graphicalObject.transform.SetParent(shelf.GetTransform());
         graphicalObject.transform.localPosition = this.package.Position;
+        graphicalObject.name = "\"" + this.package.Name + "\": " + this.package.SystemNumber;
 
         GenerateMesh();
         UpdateMesh();
