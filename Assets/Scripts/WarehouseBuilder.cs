@@ -26,9 +26,9 @@ public class WarehouseBuilder : MonoBehaviour
         Wall wall = new Wall(this.warehouse, position, endWall, material,height);
         graphicalObjects.Add(wall);
     }
-    public void CreateShelf(Vector3 position, Vector3 size, Material material, float rotation)
+    public void CreateShelf(Vector3 position, Vector3 size, Material material, Material packageMaterial, float rotation)
     {
-        Shelf shelf = new Shelf(this.warehouse, position, size, material, rotation);
+        Shelf shelf = new Shelf(this.warehouse, position, size, material, packageMaterial, rotation);
         graphicalObjects.Add(shelf);
     }
 }

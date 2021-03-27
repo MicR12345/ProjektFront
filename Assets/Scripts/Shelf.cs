@@ -7,34 +7,44 @@ public class Shelf : GraphicalObject
     Vector3 size;
     List<Sector> sectors;
 
-    static readonly float supportSize = 0.10f;
-    static readonly float sectorHeight = 0.05f;
-    public Shelf(Warehouse warehouse,Vector3 position,Vector3 size,Material material,float rotation) : base(warehouse, position, material)
+    Material packageMaterial;
+
+    public static readonly float supportSize = 0.10f;
+    public static readonly float sectorHeight = 0.05f;
+
+    float rotation;
+    public Shelf(Warehouse warehouse,Vector3 position,Vector3 size,Material material,Material packageMaterial,float rotation) : base(warehouse, position, material)
     {
-        this.position = position;
         this.size = size;
         sectors = new List<Sector>();
         graphicalObject.name = "Shelf" + position.x + "," + position.z;
-        graphicalObject.transform.RotateAround(position, graphicalObject.transform.up, rotation);
-        sectors.Add(new Sector());
-        sectors.Add(new Sector());
-        sectors.Add(new Sector());
-        sectors.Add(new Sector());
-        sectors.Add(new Sector());
-        sectors.Add(new Sector());
-        sectors.Add(new Sector());
-        sectors.Add(new Sector());
-        sectors.Add(new Sector());
-        sectors.Add(new Sector());
-        sectors.Add(new Sector());
-        sectors.Add(new Sector());
+        this.packageMaterial = packageMaterial;
+        this.rotation = rotation;
+        //Debug package list
+        List<Package> debugPackages = new List<Package>();
+        debugPackages.Add(new Package("test", new Vector3(.8f, .8f, .8f), new Vector3(0, 0, 0), 30, 30));
+        debugPackages.Add(new Package("test", new Vector3(.8f, .8f, .8f), new Vector3(1, 0, 0), 30, 30));
+        debugPackages.Add(new Package("test", new Vector3(.8f, .8f, .8f), new Vector3(2, 0, 0), 30, 30));
+        for (int i = 0; i < 10; i++)
+        {
+            sectors.Add(new Sector(i,debugPackages));
+        }
         GenerateMesh();
         UpdateMesh();
+        graphicalObject.transform.RotateAround(position, graphicalObject.transform.up, rotation);
     }
     public override void GenerateMesh()
     {
         GenerateSupports((size.y + sectorHeight) * sectors.Count);
         GenerateSectors();
+        foreach (Sector sector in sectors)
+        {
+            foreach (Package package in sector.packagesData)
+            {
+                  PackageObject packageObject = new PackageObject(warehouse, this, (size.y + sectorHeight) * sector.id, package, packageMaterial);
+                  sector.packages.Add(packageObject);
+            }
+        }
     }
     private void GenerateSupports(float height)
     {
@@ -44,7 +54,7 @@ public class Shelf : GraphicalObject
             for (int z = 0; z < 2; z++)
             {
                 int vertsCount = verts.Count;
-                Vector3 leftbottomPosition = position - new Vector3(size.x/2,0,size.z/2);
+                Vector3 leftbottomPosition = warehouse.gameObject.transform.position - new Vector3(size.x/2,0,size.z/2);
                 verts.Add(leftbottomPosition + new Vector3(x * (size.x - supportSize), position.y, z * (size.z + supportSize)));
                 verts.Add(leftbottomPosition + new Vector3(supportSize, position.y, 0) + new Vector3(x * (size.x - supportSize), 0,z*(size.z+supportSize)));
                 verts.Add(leftbottomPosition + new Vector3(0, position.y, -supportSize) + new Vector3(x * (size.x - supportSize), 0, z * (size.z + supportSize)));
@@ -99,7 +109,7 @@ public class Shelf : GraphicalObject
         for (int i = 0; i < sectors.Count; i++)
         {
             int vertsCount = verts.Count;
-            Vector3 leftbottomPosition = position - new Vector3(size.x / 2, 0, size.z / 2);
+            Vector3 leftbottomPosition = warehouse.gameObject.transform.position - new Vector3(size.x / 2f, 0, size.z / 2f);
             verts.Add(leftbottomPosition + new Vector3(0, position.y + i * (sectorHeight + size.y),0));
             verts.Add(leftbottomPosition + new Vector3(size.x,position.y + i*(sectorHeight+size.y), 0));
             verts.Add(leftbottomPosition + new Vector3(0, position.y + i * (sectorHeight + size.y), size.z));
@@ -162,9 +172,29 @@ public class Shelf : GraphicalObject
             uvs.Add(new Vector2(1, 1));
         }
     }
+    public Vector3 GetSize()
+    {
+        return size;
+    }
+    public Vector3 GetPosition()
+    {
+            return graphicalObject.transform.position;
+    }
 }
 public class Sector
 {
-    int id;
-    List<Package> packages;
+    public int id;
+    public List<PackageObject> packages;
+    public List<Package> packagesData;
+
+    public Sector()
+    {
+        Debug.Log("DebugSectorCrated");
+    }
+    public Sector(int id,List<Package> packages)
+    {
+        this.id = id;
+        this.packages = new List<PackageObject>();
+        this.packagesData = packages;
+    }
 }

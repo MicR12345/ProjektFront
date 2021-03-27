@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class GraphicalObject
 {
-    protected GameObject graphicalObject;
+    public GameObject graphicalObject;
     protected Warehouse warehouse;
 
     protected MeshFilter meshFilter;
@@ -22,11 +22,12 @@ public abstract class GraphicalObject
         graphicalObject = new GameObject();
         this.warehouse = warehouse;
 
-
         this.material = material;
         graphicalObject.transform.SetParent(this.warehouse.transform);
+        graphicalObject.name = "Graphical Object";
 
         this.position = position;
+        this.graphicalObject.transform.localPosition = position;
 
         meshFilter = graphicalObject.AddComponent<MeshFilter>();
         meshRenderer = graphicalObject.AddComponent<MeshRenderer>();
@@ -46,6 +47,10 @@ public abstract class GraphicalObject
         meshFilter.mesh = mesh;
         meshRenderer.material = material;
     }
+    public Transform GetTransform()
+    {
+        return graphicalObject.transform;
+    }
 }
 public class Floor : GraphicalObject
 {
@@ -57,13 +62,14 @@ public class Floor : GraphicalObject
         graphicalObject.name = "Floor" + position.x + "," + position.z;
         GenerateMesh();
         UpdateMesh();
+        //graphicalObject.transform.position = position;
     }
     public override void GenerateMesh()
     {
-        verts.Add(position);
-        verts.Add(new Vector3(floorEnd.x, 0, position.z));
-        verts.Add(new Vector3(position.x, 0, floorEnd.z));
-        verts.Add(new Vector3(floorEnd.x, 0, floorEnd.z));
+        verts.Add(Vector3.zero);
+        verts.Add(new Vector3(floorEnd.x, 0, 0));
+        verts.Add(new Vector3(0, 0,floorEnd.z));
+        verts.Add(new Vector3(floorEnd.x, 0,floorEnd.z));
 
         triangles.Add(1);
         triangles.Add(0);
@@ -114,14 +120,7 @@ public class Wall : GraphicalObject
     }
 
 }
-public class InteractableObject : GraphicalObject
+public interface InteractableObject
 {
-    public InteractableObject(Warehouse warehouse, Vector3 position, Material material) : base(warehouse, position, material)
-    {
-
-    }
-    public override void GenerateMesh()
-    {
-        throw new System.NotImplementedException();
-    }
+    public void OnRaycastHit();
 }
