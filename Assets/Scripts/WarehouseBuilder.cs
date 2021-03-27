@@ -15,6 +15,10 @@ public class WarehouseBuilder : MonoBehaviour
         graphicalObjects = new List<GraphicalObject>();
             
     }
+    public void CreateFromLayout(Layout layout)
+    {
+        //TODO
+    }
     public void CreateFloor(Vector3 position,Vector3 endFloor,Material material)
     {
         Floor floor = new Floor(this.warehouse, position, endFloor, material);

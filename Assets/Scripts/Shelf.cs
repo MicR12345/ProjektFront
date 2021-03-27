@@ -177,10 +177,6 @@ public class Shelf : GraphicalObject
     {
         return size;
     }
-    public Vector3 GetPosition()
-    {
-            return graphicalObject.transform.position;
-    }
 }
 public class Sector
 {

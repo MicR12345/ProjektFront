@@ -5,17 +5,13 @@ using UnityEngine;
 public class Warehouse : MonoBehaviour
 {
     [SerializeField]
-    public Material FloorMaterial;
-    public Material ShelfMaterial;
-    public Material PackageMaterial;
-
-    [System.Serializable]
-    public class InputRay
-    {
-        public Ray ray = new Ray();
-    }
+    public Material FloorMaterial { get; }
+    public Material ShelfMaterial { get; }
+    public Material PackageMaterial { get; }
 
     WarehouseBuilder Builder;
+    public PlayerController PlayerController { get; }
+
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +20,7 @@ public class Warehouse : MonoBehaviour
         Builder.Initialize(this);
         Builder.CreateFloor(new Vector3(0, 0, 0), new Vector3(60, 0, 40),FloorMaterial);
         Builder.CreateWall(new Vector3(0, 0, 0), new Vector3(10, 0, 0),FloorMaterial,5);
+
         //Builder.CreateShelf(new Vector3(5,0,5), new Vector3(3, 1, 1), ShelfMaterial, FloorMaterial, 0);
          for (int z = 0; z < 10; z++)
          {

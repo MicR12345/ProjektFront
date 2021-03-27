@@ -58,10 +58,12 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Package.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\GraphicalObjects.cs" />
     <Compile Include="Assets\Scripts\WarehouseBuilder.cs" />
     <Compile Include="Assets\Scripts\Shelf.cs" />
     <Compile Include="Assets\Scripts\Warehouse.cs" />
-    <Compile Include="Assets\Scripts\GraphicalObjects.cs" />
+    <Compile Include="Assets\Scripts\PackageHandler.cs" />
+    <Compile Include="Assets\Scripts\Layout.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

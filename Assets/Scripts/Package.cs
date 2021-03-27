@@ -25,6 +25,7 @@ public class PackageObject : GraphicalObject,InteractableObject
     Shelf shelf;
     Package package;
     float sectorHeight;
+    PackageHandler packageHandler;
     public PackageObject(Warehouse warehouse, Shelf shelf ,float sectorHeight ,Package package, Material material) : base(warehouse, package.Position, material)
     {
         this.package = package;
@@ -36,6 +37,8 @@ public class PackageObject : GraphicalObject,InteractableObject
         graphicalObject.transform.SetParent(shelf.GetTransform());
         graphicalObject.transform.localPosition = this.package.Position;
         graphicalObject.name = "\"" + this.package.Name + "\": " + this.package.SystemNumber;
+        packageHandler = graphicalObject.AddComponent<PackageHandler>();
+        packageHandler.packageObject = this;
 
         GenerateMesh();
         UpdateMesh();
