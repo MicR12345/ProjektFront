@@ -166,6 +166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42c46be8f362d2c479a50533cdd1f371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FloorMaterial: {fileID: 2100000, guid: 798071fac72b4cc4188ce5207da6d4a2, type: 2}
+  ShelfMaterial: {fileID: 2100000, guid: dac8ba7dc6c1a7b428de6a1bfca28615, type: 2}
+  PackageMaterial: {fileID: 2100000, guid: 2e8e2464fd631034cba8519ae1344481, type: 2}
 --- !u!1 &225894822
 GameObject:
   m_ObjectHideFlags: 0
