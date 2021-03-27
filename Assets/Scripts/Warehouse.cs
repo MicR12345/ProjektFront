@@ -5,9 +5,9 @@ using UnityEngine;
 public class Warehouse : MonoBehaviour
 {
     [SerializeField]
-    public Material FloorMaterial { get; }
-    public Material ShelfMaterial { get; }
-    public Material PackageMaterial { get; }
+    public Material FloorMaterial;
+    public Material ShelfMaterial;
+    public Material PackageMaterial;
 
     WarehouseBuilder Builder;
     public PlayerController PlayerController { get; }
