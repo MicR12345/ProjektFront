@@ -9,6 +9,7 @@ public abstract class GraphicalObject
 
     protected MeshFilter meshFilter;
     protected MeshRenderer meshRenderer;
+    protected MeshCollider collider;
 
     protected Material material;
 
@@ -31,6 +32,10 @@ public abstract class GraphicalObject
 
         meshFilter = graphicalObject.AddComponent<MeshFilter>();
         meshRenderer = graphicalObject.AddComponent<MeshRenderer>();
+        
+        collider = graphicalObject.AddComponent<MeshCollider>();
+        collider.convex = true;
+        collider.enabled = true;
 
         verts = new List<Vector3>();
         triangles = new List<int>();
@@ -46,6 +51,7 @@ public abstract class GraphicalObject
         mesh.RecalculateNormals();
         meshFilter.mesh = mesh;
         meshRenderer.material = material;
+        collider.sharedMesh = mesh;        
     }
     public Transform GetTransform()
     {
