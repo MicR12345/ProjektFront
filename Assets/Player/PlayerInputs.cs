@@ -21,11 +21,18 @@ namespace LP.FPSControllerNewInput
         private float camRot = 0;
 
         public float speed = 5f;
-        public float sprintSpeed = 20f;
+        public float gravity = -9.81f;
         public float mouseSensitivity = 100;
+
+        public float sprintSpeed = 20f;
         public bool isSprinting;
 
-       
+        public Transform groundCheck;
+        public float groundDistance = 0.4f;
+        public LayerMask groundMask;
+
+        Vector3 velocity;
+        bool isGrounded;
 
         private void Start()
         {
@@ -63,12 +70,18 @@ namespace LP.FPSControllerNewInput
         }
         private void Update()
         {
+           
             Move();
             Turn();
         }
         private void Move()
         {
-            
+            isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+            if(isGrounded && velocity.y < 0)
+            {
+                velocity.y = -10f;
+            }
+
             float x = movement.ReadValue<Vector2>().x;
             float z = movement.ReadValue<Vector2>().y;           
            
@@ -83,7 +96,10 @@ namespace LP.FPSControllerNewInput
                 controller.Move(direction * speed * Time.deltaTime);
             }
 
-            
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+
+
         }
         private void Turn()
         {
