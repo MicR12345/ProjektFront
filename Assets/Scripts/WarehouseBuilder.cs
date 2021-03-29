@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WarehouseBuilder
+public class WarehouseBuilder : MonoBehaviour
 {
     GameObject warehouseObject;
     Warehouse warehouse;
