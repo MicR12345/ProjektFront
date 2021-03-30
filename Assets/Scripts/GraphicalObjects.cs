@@ -32,10 +32,8 @@ public abstract class GraphicalObject
 
         meshFilter = graphicalObject.AddComponent<MeshFilter>();
         meshRenderer = graphicalObject.AddComponent<MeshRenderer>();
-        
-        collider = graphicalObject.AddComponent<MeshCollider>();
-        collider.convex = true;
-        collider.enabled = true;
+
+        GenerateCollider();
 
         verts = new List<Vector3>();
         triangles = new List<int>();
@@ -57,6 +55,12 @@ public abstract class GraphicalObject
     {
         return graphicalObject.transform;
     }
+    public void GenerateCollider()
+    {
+        collider = graphicalObject.AddComponent<MeshCollider>();
+        collider.convex = true;
+        collider.enabled = true;
+    }
 }
 public class Floor : GraphicalObject
 {
@@ -76,6 +80,10 @@ public class Floor : GraphicalObject
         verts.Add(new Vector3(floorEnd.x, 0, 0));
         verts.Add(new Vector3(0, 0,floorEnd.z));
         verts.Add(new Vector3(floorEnd.x, 0,floorEnd.z));
+        verts.Add(new Vector3(0,-0.2f,0));
+        verts.Add(new Vector3(floorEnd.x, -0.2f, 0));
+        verts.Add(new Vector3(0, -0.2f, floorEnd.z));
+        verts.Add(new Vector3(floorEnd.x, -0.2f, floorEnd.z));
 
         triangles.Add(1);
         triangles.Add(0);
@@ -83,6 +91,12 @@ public class Floor : GraphicalObject
         triangles.Add(1);
         triangles.Add(2);
         triangles.Add(3);
+        triangles.Add(6);
+        triangles.Add(4);
+        triangles.Add(5);
+        triangles.Add(7);
+        triangles.Add(6);
+        triangles.Add(5);
 
         for (int i = 0; i < verts.Count; i++)
         {

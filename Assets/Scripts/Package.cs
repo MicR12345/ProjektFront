@@ -10,6 +10,7 @@ public class Package
     public int SystemNumber;
     public int Specimen;
     public int Number;
+    public int articleCode;
     public Package(string name,Vector3 dimensions,Vector3 position,int systemNumber,int number)
     {
         Name = name;
