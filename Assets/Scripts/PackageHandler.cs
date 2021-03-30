@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class PackageHandler : MonoBehaviour
 {
-    //Warehouse warehouse;
+    public Warehouse warehouse;
 
     public PackageObject packageObject;
+
+    public PlayerInputs playerInputs;
 
     public PackageHandler(PackageObject packageObject)
     {
@@ -14,12 +16,15 @@ public class PackageHandler : MonoBehaviour
     }
     void Start()
     {
-        
+        playerInputs = warehouse.Player.GetComponent<PlayerInputs>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        if (playerInputs.highlightRay.detectedObject && (playerInputs.highlightRay.hit.transform == packageObject.GetTransform()))
+        {
+            
+        }
     }
 }

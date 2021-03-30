@@ -24,7 +24,7 @@ public class Package
 public class PackageObject : GraphicalObject,InteractableObject
 {
     Shelf shelf;
-    Package package;
+    public Package package;
     float sectorHeight;
     PackageHandler packageHandler;
     public PackageObject(Warehouse warehouse, Shelf shelf ,float sectorHeight ,Package package, Material material) : base(warehouse, package.Position, material)
@@ -40,6 +40,9 @@ public class PackageObject : GraphicalObject,InteractableObject
         graphicalObject.name = "\"" + this.package.Name + "\": " + this.package.SystemNumber;
         packageHandler = graphicalObject.AddComponent<PackageHandler>();
         packageHandler.packageObject = this;
+        packageHandler.warehouse = warehouse;
+
+        graphicalObject.layer = 0;
 
         GenerateMesh();
         UpdateMesh();
@@ -110,6 +113,10 @@ public class PackageObject : GraphicalObject,InteractableObject
     public void OnRaycastHit()
     {
         throw new System.NotImplementedException();
+    }
+    void Update()
+    {
+
     }
 
 }

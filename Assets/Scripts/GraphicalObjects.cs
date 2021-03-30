@@ -38,6 +38,8 @@ public abstract class GraphicalObject
         verts = new List<Vector3>();
         triangles = new List<int>();
         uvs = new List<Vector2>();
+
+        graphicalObject.layer = 2;
     }
     public abstract void GenerateMesh();
     public void UpdateMesh()
