@@ -5,20 +5,18 @@ using System.Collections.Specialized;
 using System.Linq;
 using UnityEngine;
 
-public class Layout : MonoBehaviour
+public class Layout
 {
     private PackageJSON[] packageJSONs;
     private SectorJSON[] sectorJSONs;
-    public List<Sector> sectors;
-    public List<Tuple<int, Vector3>> ShelfPosition;
+    public List<Tuple<Sector, Vector3>> ShelfPreparation;
     public Layout(string path1, string path2)
     {
-        sectors = GenerateSectors();
-        ShelfPosition = GenerateShelfPosition();
         PackageWrapper packageobjects = JsonUtility.FromJson<PackageWrapper>(path2);
         SectorWrapper sectorobjects = JsonUtility.FromJson<SectorWrapper>(path1);
         sectorJSONs = sectorobjects.sectorobjects.ToArray();
         packageJSONs = packageobjects.packageobjects.ToArray();
+        ShelfPreparation = GenerateShelfPreparation();
     }
     [Serializable]
     public class SectorWrapper
@@ -85,20 +83,12 @@ public class Layout : MonoBehaviour
                 return Vector3.zero;
             }
     }
-    public List<Tuple<int, Vector3>> GenerateShelfPosition()
+    public List<Tuple<Sector, Vector3>> GenerateShelfPreparation()
     {
-        List<Tuple<int, Vector3>> IdPosition = new List<Tuple<int, Vector3>>();
-        foreach (SectorJSON idposition in sectorJSONs)
-        {
-            IdPosition.Add(Tuple.Create(idposition.id, new Vector3(idposition.x, idposition.y, idposition.z)));
-        }
-        return IdPosition;
-    }
-    public List<Sector> GenerateSectors()
-    {
-        List<Sector> CompleteSectors = new List<Sector>();
+        List<Tuple<Sector, Vector3>> CompleteSectors = new List<Tuple<Sector, Vector3>>();
         foreach (SectorJSON sector in sectorJSONs)
         {
+
             Sector newsector = new Sector(sector.id);
             foreach (PackageJSON package in packageJSONs)
             {
@@ -113,7 +103,7 @@ public class Layout : MonoBehaviour
                         ));
                 }
             }
-            CompleteSectors.Add(newsector);
+            CompleteSectors.Add(Tuple.Create(newsector, new Vector3(sector.x, sector.y, sector.z)));
         }
         return CompleteSectors;
     }

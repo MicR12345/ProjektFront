@@ -14,23 +14,14 @@ public class Shelf : GraphicalObject
     public static readonly float sectorHeight = 0.05f;
 
     float rotation;
-    public Shelf(Warehouse warehouse,Vector3 position,Vector3 size,Material material,Material packageMaterial,float rotation) : base(warehouse, position, material)
+    public Shelf(Warehouse warehouse,Vector3 position,Vector3 size,Material material,Material packageMaterial,float rotation, List<Sector> sector) : base(warehouse, position, material)
     {
         this.size = size;
-        sectors = new List<Sector>();
+        sectors = sector;
         graphicalObject.name = "Shelf" + position.x + "," + position.z;
 
         this.packageMaterial = packageMaterial;
         this.rotation = rotation;
-        //Debug package list
-        List<Package> debugPackages = new List<Package>();
-        debugPackages.Add(new Package("test", new Vector3(.8f, .8f, .8f), new Vector3(0, 0, 0), 30, 30));
-        debugPackages.Add(new Package("test", new Vector3(.8f, .8f, .8f), new Vector3(1, 0, 0), 30, 30));
-        debugPackages.Add(new Package("test", new Vector3(.8f, .8f, .8f), new Vector3(2, 0, 0), 30, 30));
-        for (int i = 0; i < 10; i++)
-        {
-            sectors.Add(new Sector(i,debugPackages));
-        }
         GenerateMesh();
         UpdateMesh();
         graphicalObject.transform.RotateAround(position, graphicalObject.transform.up, rotation);
