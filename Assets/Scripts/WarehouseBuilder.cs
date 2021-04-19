@@ -21,8 +21,8 @@ public class WarehouseBuilder : MonoBehaviour
     public void CreateFromLayout(Layout layout)
     {
         List<Tuple<Sector, Vector3>> Copy = new List<Tuple<Sector, Vector3>>();
-        List<Tuple<Sector, Vector3>> Copy2 = (List<Tuple<Sector, Vector3>>)Copy.OrderBy(x => x.Item2.x).GroupBy(x => x.Item2.x);
-        foreach (Tuple<Sector, Vector3> tuple in Copy2)
+        Debug.Log(Copy.Count);
+        foreach (Tuple<Sector, Vector3> tuple in Copy)
         {
             Debug.Log(tuple.Item2.x + " " + tuple.Item2.z);
         }

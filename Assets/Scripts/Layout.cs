@@ -15,6 +15,8 @@ public class Layout
     {
         string jsonPackages = File.ReadAllText(packagesJSON);
         string jsonSectors = File.ReadAllText(sectorsJSON);
+        jsonPackages = "{\n\"packageobjects\":" + jsonPackages + "}";
+        jsonSectors = "{\n\"sectorobjects\":" + jsonSectors + "}";
         PackageWrapper packageobjects = JsonUtility.FromJson<PackageWrapper>(jsonPackages);
         SectorWrapper sectorobjects = JsonUtility.FromJson<SectorWrapper>(jsonSectors);
         sectorJSONs = sectorobjects.sectorobjects.ToArray();
