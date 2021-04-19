@@ -31,13 +31,13 @@ public class Layout
     [Serializable]
     public class SectorJSON
     {
-        public int id { get; set; }
-        public float x { get; set; }
-        public float y { get; set; }
-        public float z { get; set; }
-        public float width { get; set; }
-        public float depth { get; set; }
-        public float height { get; set; }
+        public int id;
+        public float x;
+        public float y;
+        public float z;
+        public float width;
+        public float depth;
+        public float height;
     }
 
     [Serializable]
@@ -48,24 +48,24 @@ public class Layout
     [Serializable]
     public class PackageJSON
     {
-        public int systemNumber { get; set; }
-        public int specimen { get; set; }
-        public int package { get; set; }
-        public string articleCode { get; set; }
-        public Dimensions dimensions { get; set; }
-        public Location location { get; set; }
+        public int systemNumber;
+        public int specimen;
+        public int package;
+        public string articleCode;
+        public Dimensions dimensions;
+        public Location location;
 
         public class Dimensions
         {
-            public float height { get; set; }
-            public float width { get; set; }
-            public float depth { get; set; }
+            public float height;
+            public float width;
+            public float depth;
         }
 
         public class Location
         {
-            public string arrangement { get; set; }
-            public int id { get; set; }
+            public string arrangement;
+            public int id;
         }
     }
     public Vector3 PositionFromArrangement(PackageJSON package)
