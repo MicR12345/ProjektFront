@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.IO;
 using UnityEngine;
 
 public class Layout
@@ -10,10 +11,12 @@ public class Layout
     private PackageJSON[] packageJSONs;
     private SectorJSON[] sectorJSONs;
     public List<Tuple<Sector, Vector3>> ShelfPreparation;
-    public Layout(string path1, string path2)
+    public Layout(string packagesJSON, string sectorsJSON)
     {
-        PackageWrapper packageobjects = JsonUtility.FromJson<PackageWrapper>(path2);
-        SectorWrapper sectorobjects = JsonUtility.FromJson<SectorWrapper>(path1);
+        string jsonPackages = File.ReadAllText(packagesJSON);
+        string jsonSectors = File.ReadAllText(sectorsJSON);
+        PackageWrapper packageobjects = JsonUtility.FromJson<PackageWrapper>(jsonPackages);
+        SectorWrapper sectorobjects = JsonUtility.FromJson<SectorWrapper>(jsonSectors);
         sectorJSONs = sectorobjects.sectorobjects.ToArray();
         packageJSONs = packageobjects.packageobjects.ToArray();
         ShelfPreparation = GenerateShelfPreparation();
@@ -27,11 +30,11 @@ public class Layout
     public class SectorJSON
     {
         public int id { get; set; }
-        public int x { get; set; }
-        public int y { get; set; }
-        public int z { get; set; }
-        public int width { get; set; }
-        public int depth { get; set; }
+        public float x { get; set; }
+        public float y { get; set; }
+        public float z { get; set; }
+        public float width { get; set; }
+        public float depth { get; set; }
         public float height { get; set; }
     }
 

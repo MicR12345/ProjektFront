@@ -24,7 +24,7 @@ public class Warehouse : MonoBehaviour
         Builder.CreateFloor(new Vector3(0, 0, 0), new Vector3(60, 0, 40),FloorMaterial);
         Builder.CreateWall(new Vector3(0, 0, 0), new Vector3(10, 0, 0),FloorMaterial,5);
 
-        Layout layout = new Layout(@"J:\JSON\packages.json", @"J:\JSON\sectors.json");
+        Layout layout = new Layout("I:\\packages.json", "I:\\sectors.json");
         Builder.CreateFromLayout(layout);
     }
 
