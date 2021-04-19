@@ -179,10 +179,20 @@ public class Sector
     {
         Debug.Log("DebugSectorCrated");
     }
+    public Sector(int id)
+    {
+        this.id = id;
+        this.packages = new List<PackageObject>();
+        this.packagesData = new List<Package>();
+    }
     public Sector(int id,List<Package> packages)
     {
         this.id = id;
         this.packages = new List<PackageObject>();
         this.packagesData = packages;
+    }
+    public void AddPackageData(Package package)
+    {
+        packagesData.Add(package);
     }
 }
