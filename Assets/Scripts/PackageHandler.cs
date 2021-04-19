@@ -24,7 +24,12 @@ public class PackageHandler : MonoBehaviour
     {
         if (playerInputs.highlightRay.detectedObject && (playerInputs.highlightRay.hit.transform == packageObject.GetTransform()))
         {
-            
+            warehouse.textUI.text = "Name: " + packageObject.package.Name + "\n" +
+            "Dimension: " + packageObject.package.Dimensions + "\n" +
+            "Position: " + packageObject.package.Position + "\n" +
+            "Package\'s number: " + packageObject.package.Number + "\n" +
+            "System\'s number: " + packageObject.package.SystemNumber;
         }
+        
     }
 }

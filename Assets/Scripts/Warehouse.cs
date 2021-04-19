@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Warehouse : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class Warehouse : MonoBehaviour
     public Material PackageMaterial;
 
     public GameObject Player;
+    private PlayerInputs playerInputs;
+
+    public Text textUI;
 
     WarehouseBuilder Builder;
 
@@ -19,6 +23,8 @@ public class Warehouse : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerInputs = Player.GetComponent<PlayerInputs>();
+
         Builder = gameObject.AddComponent<WarehouseBuilder>();
         Builder.Initialize(this);
         Builder.CreateFloor(new Vector3(0, 0, 0), new Vector3(60, 0, 40),FloorMaterial);
@@ -37,6 +43,12 @@ public class Warehouse : MonoBehaviour
              }
          }
 
+    }
+
+    void FixedUpdate()
+    {
+        if (!playerInputs.highlightRay.detectedObject)
+            textUI.text = " ";
     }
 
     // Update is called once per frame
