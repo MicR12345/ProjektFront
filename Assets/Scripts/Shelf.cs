@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -193,5 +194,15 @@ public class Sector
         this.id = id;
         this.packages = new List<PackageObject>();
         this.packagesData = packages;
+    }
+    public Sector(int id)
+    {
+        this.id = id;
+        this.packages = new List<PackageObject>();
+        this.packagesData = new List<Package>();
+    }
+    public void AddPackageData(Package packageData)
+    {
+        packagesData.Add(packageData);
     }
 }
