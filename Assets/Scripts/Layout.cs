@@ -19,7 +19,9 @@ public class Layout
         jsonSectors = "{\n\"sectorobjects\":" + jsonSectors + "}";
         PackageWrapper packageobjects = JsonUtility.FromJson<PackageWrapper>(jsonPackages);
         SectorWrapper sectorobjects = JsonUtility.FromJson<SectorWrapper>(jsonSectors);
+        sectorJSONs = new SectorJSON[sectorobjects.sectorobjects.Count];
         sectorJSONs = sectorobjects.sectorobjects.ToArray();
+        packageJSONs = new PackageJSON[packageobjects.packageobjects.Count];
         packageJSONs = packageobjects.packageobjects.ToArray();
         ShelfPreparation = GenerateShelfPreparation();
     }
@@ -54,14 +56,14 @@ public class Layout
         public string articleCode;
         public Dimensions dimensions;
         public Location location;
-
+        [Serializable]
         public class Dimensions
         {
             public float height;
             public float width;
             public float depth;
         }
-
+        [Serializable]
         public class Location
         {
             public string arrangement;

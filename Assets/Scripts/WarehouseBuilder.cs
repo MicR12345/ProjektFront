@@ -20,10 +20,9 @@ public class WarehouseBuilder : MonoBehaviour
     }
     public void CreateFromLayout(Layout layout)
     {
-        List<Tuple<Sector, Vector3>> Copy = new List<Tuple<Sector, Vector3>>();
-        Debug.Log(Copy.Count);
-        foreach (Tuple<Sector, Vector3> tuple in Copy)
+        foreach (Tuple<Sector, Vector3> tuple in layout.ShelfPreparation)
         {
+
             Debug.Log(tuple.Item2.x + " " + tuple.Item2.z);
         }
     }
