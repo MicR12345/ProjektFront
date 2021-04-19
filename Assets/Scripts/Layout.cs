@@ -70,7 +70,7 @@ public class Layout
             public int id;
         }
     }
-    public Vector3 PositionFromArrangement(PackageJSON package)
+    public Vector3 PositionFromArrangement(PackageJSON package,SectorJSON sector)
     {
             if (package.location.arrangement[0] == '1')
             {
@@ -78,11 +78,11 @@ public class Layout
             }
             else if (package.location.arrangement[1] == '1')
             {
-                return new Vector3(package.dimensions.width / 3, 0, 0);
+                return new Vector3(2f / 3f, 0, 0);
             }
             else if (package.location.arrangement[2] == '1')
             {
-                return new Vector3(package.dimensions.width / 3 * 2, 0, 0);
+                return new Vector3(2f / 3f * 2f, 0, 0);
             }
             else
             {
@@ -104,7 +104,7 @@ public class Layout
                     newsector.AddPackageData(new Package(
                         package.articleCode,
                         new Vector3(package.dimensions.width, package.dimensions.height, package.dimensions.depth),
-                        PositionFromArrangement(package),
+                        PositionFromArrangement(package,sector),
                         package.systemNumber,
                         package.package
                         ));

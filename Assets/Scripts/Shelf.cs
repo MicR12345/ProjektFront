@@ -14,10 +14,10 @@ public class Shelf : GraphicalObject
     public static readonly float sectorHeight = 0.05f;
 
     float rotation;
-    public Shelf(Warehouse warehouse,Vector3 position,Vector3 size,Material material,Material packageMaterial,float rotation, List<Sector> sector) : base(warehouse, position, material)
+    public Shelf(Warehouse warehouse,Vector3 position,Vector3 size,Material material,Material packageMaterial,float rotation, List<Sector> sectors) : base(warehouse, position, material)
     {
         this.size = size;
-        sectors = sector;
+        this.sectors = sectors;
         graphicalObject.name = "Shelf" + position.x + "," + position.z;
 
         this.packageMaterial = packageMaterial;
