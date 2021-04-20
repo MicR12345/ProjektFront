@@ -33,7 +33,7 @@ public class Shelf : GraphicalObject
         {
             foreach (Package package in sector.packagesData)
             {
-                  PackageObject packageObject = new PackageObject(warehouse, this, (size.y + sectorHeight) * sector.id, package, packageMaterial);
+                  PackageObject packageObject = new PackageObject(warehouse, this, (size.y + sectorHeight) * sectors.IndexOf(sector), package, packageMaterial);
                   sector.packages.Add(packageObject);
             }
         }
