@@ -4,21 +4,37 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.IO;
+using System.Net;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class Layout
 {
+    static string url = "https://localhost:44374";
+    static string urlPackages = "/api/Package/GetPackages";
+    static string urlSectors = "/api/Sector/GetSectors";
+
+    string packageString;
+    string sectorString;
+
     private PackageJSON[] packageJSONs;
     private SectorJSON[] sectorJSONs;
     public List<Tuple<Sector, Vector3>> ShelfPreparation;
+
+    private string GetStringFromUrl(string url)
+    {
+        WebClient webClient = new WebClient();
+        string result = webClient.DownloadString(url);
+        return result;
+    }
     public Layout(string packagesJSON, string sectorsJSON)
     {
-        string jsonPackages = File.ReadAllText(packagesJSON);
-        string jsonSectors = File.ReadAllText(sectorsJSON);
-        jsonPackages = "{\n\"packageobjects\":" + jsonPackages + "}";
-        jsonSectors = "{\n\"sectorobjects\":" + jsonSectors + "}";
-        PackageWrapper packageobjects = JsonUtility.FromJson<PackageWrapper>(jsonPackages);
-        SectorWrapper sectorobjects = JsonUtility.FromJson<SectorWrapper>(jsonSectors);
+        packageString = GetStringFromUrl(url+urlPackages);
+        sectorString = GetStringFromUrl(url + urlSectors);
+        packageString = "{\n\"packageobjects\":" + packageString + "}";
+        sectorString = "{\n\"sectorobjects\":" + sectorString + "}";
+        PackageWrapper packageobjects = JsonUtility.FromJson<PackageWrapper>(packageString);
+        SectorWrapper sectorobjects = JsonUtility.FromJson<SectorWrapper>(sectorString);
         sectorJSONs = new SectorJSON[sectorobjects.sectorobjects.Count];
         sectorJSONs = sectorobjects.sectorobjects.ToArray();
         packageJSONs = new PackageJSON[packageobjects.packageobjects.Count];

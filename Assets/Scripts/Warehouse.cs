@@ -17,9 +17,6 @@ public class Warehouse : MonoBehaviour
 
     WarehouseBuilder Builder;
 
-    
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +30,6 @@ public class Warehouse : MonoBehaviour
         Layout layout = new Layout("I:\\packages.json", "I:\\sectors.json");
         Builder.CreateFromLayout(layout);
     }
-
     void FixedUpdate()
     {
         if (!playerInputs.highlightRay.detectedObject)
