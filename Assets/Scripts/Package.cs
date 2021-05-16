@@ -11,6 +11,8 @@ public class Package
     public int Specimen;
     public int Number;
     public int articleCode;
+
+    public bool isSearched = false;
     public Package(string name,Vector3 dimensions,Vector3 position,int systemNumber,int number)
     {
         Name = name;

@@ -10,8 +10,6 @@ public class PackageHandler : MonoBehaviour
 
     public PlayerInputs playerInputs;
 
-    public bool isSearched = false;
-
     public PackageHandler(PackageObject packageObject)
     {
         this.packageObject = packageObject;
@@ -24,7 +22,7 @@ public class PackageHandler : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (isSearched)
+        if (packageObject.package.isSearched)
         {
             packageObject.SearchChangeColor(true);
         }
