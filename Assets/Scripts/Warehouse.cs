@@ -17,10 +17,12 @@ public class Warehouse : MonoBehaviour
 
     WarehouseBuilder Builder;
 
+    public List<PackageObject> packagesList;
     // Start is called before the first frame update
     void Start()
     {
         playerInputs = Player.GetComponent<PlayerInputs>();
+        List<PackageObject> packagesList = new List<PackageObject>();
 
         Builder = gameObject.AddComponent<WarehouseBuilder>();
         Builder.Initialize(this);

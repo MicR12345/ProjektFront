@@ -10,6 +10,8 @@ public class PackageHandler : MonoBehaviour
 
     public PlayerInputs playerInputs;
 
+    public bool isSearched = false;
+
     public PackageHandler(PackageObject packageObject)
     {
         this.packageObject = packageObject;
@@ -22,6 +24,14 @@ public class PackageHandler : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (isSearched)
+        {
+            packageObject.SearchChangeColor(true);
+        }
+        else
+        {
+            packageObject.SearchChangeColor(true);
+        }
         if (playerInputs.highlightRay.detectedObject && (playerInputs.highlightRay.hit.transform == packageObject.GetTransform()))
         {
             warehouse.textUI.text = "Name: " + packageObject.package.Name + "\n" +

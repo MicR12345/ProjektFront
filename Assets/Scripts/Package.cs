@@ -46,6 +46,8 @@ public class PackageObject : GraphicalObject,InteractableObject
 
         GenerateMesh();
         UpdateMesh();
+
+        warehouse.packagesList.Add(this);
     }
     public override void GenerateMesh()
     {
@@ -110,13 +112,20 @@ public class PackageObject : GraphicalObject,InteractableObject
             uvs.Add(new Vector2(verts[i].x, verts[i].z));
         }
     }
+    public void SearchChangeColor(bool enable)
+    {
+        if (enable)
+        {
+            graphicalObject.GetComponent<Renderer>().material.color = Color.red;
+        }
+        else
+        {
+            graphicalObject.GetComponent<Renderer>().material = warehouse.PackageMaterial;
+        }
+    }
     public void OnRaycastHit()
     {
         throw new System.NotImplementedException();
-    }
-    void Update()
-    {
-
     }
 
 }
