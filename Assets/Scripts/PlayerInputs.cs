@@ -27,7 +27,7 @@ public class PlayerInputs : MonoBehaviour
 
     private CharacterController controller;
 
-    private Camera cam;
+    public Camera cam;
 
     public Warehouse warehouse;
 
@@ -197,13 +197,17 @@ public class PlayerInputs : MonoBehaviour
         string packageString = GetStringFromUrl(text);
         if (packageString != "")
         {
-            packageString = "{\n\"packageobjects\":" + packageString + "}";
-            PackageWrapper packageobjects = JsonUtility.FromJson<PackageWrapper>(packageString);
+            PackageJSON packageobjects = JsonUtility.FromJson<PackageJSON>(packageString);
             foreach (PackageObject item in warehouse.packagesList)
             {
-                if (item.package.SystemNumber == packageobjects.packageobjects[0].systemNumber && item.package.Specimen == packageobjects.packageobjects[0].specimen && item.package.Number == packageobjects.packageobjects[0].package)
+                if (item.package.SystemNumber == packageobjects.systemNumber && item.package.Specimen == packageobjects.specimen && item.package.Number == packageobjects.package)
                 {
+                    warehouse.ClearSearch();
                     item.package.isSearched = true;
+                    Vector3 target = new Vector3(item.graphicalObject.transform.position.x - 1f + item.package.Dimensions.x/2, this.transform.position.y, item.graphicalObject.transform.position.z - 0.5f + item.package.Dimensions.z / 2);
+                    this.transform.LookAt(target);
+                    Debug.Log("Looking at: " + target);
+                    
                 }
             }
         }
@@ -214,11 +218,6 @@ public class PlayerInputs : MonoBehaviour
         WebClient webClient = new WebClient();
         string result = webClient.DownloadString(url);
         return result;
-    }
-    [Serializable]
-    public class PackageWrapper
-    {
-        public List<PackageJSON> packageobjects;
     }
     [Serializable]
     public class PackageJSON

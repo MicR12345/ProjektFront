@@ -120,10 +120,11 @@ public class Layout
                     newsector.AddPackageData(new Package(
                         package.articleCode,
                         new Vector3(package.dimensions.width, package.dimensions.height, package.dimensions.depth),
-                        PositionFromArrangement(package,sector),
+                        PositionFromArrangement(package, sector),
                         package.systemNumber,
-                        package.package
-                        ));
+                        package.package,
+                        package.specimen
+                        )) ;
                 }
             }
             CompleteSectors.Add(Tuple.Create(newsector, new Vector3(sector.x, sector.y, sector.z)));

@@ -13,13 +13,14 @@ public class Package
     public int articleCode;
 
     public bool isSearched = false;
-    public Package(string name,Vector3 dimensions,Vector3 position,int systemNumber,int number)
+    public Package(string name,Vector3 dimensions,Vector3 position,int systemNumber,int number,int specimen)
     {
         Name = name;
         Dimensions = dimensions;
         Position = position;
         SystemNumber = systemNumber;
         Number = number;
+        Specimen = specimen;
     }
     
 }

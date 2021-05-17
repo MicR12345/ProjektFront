@@ -34,7 +34,6 @@ public class WarehouseBuilder : MonoBehaviour
                 if(unique.y == item.Item2.y && unique.x == item.Item2.x)
                 {
                     sectors.Add(item.Item1);
-                    Debug.Log(item.Item2.z);
                 }
             }
             CreateShelf(new Vector3(unique.x,0,unique.y), new Vector3(2, 1, 1), warehouse.ShelfMaterial, warehouse.PackageMaterial, 0, sectors);

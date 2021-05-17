@@ -22,7 +22,7 @@ public class Warehouse : MonoBehaviour
     void Start()
     {
         playerInputs = Player.GetComponent<PlayerInputs>();
-        List<PackageObject> packagesList = new List<PackageObject>();
+        packagesList = new List<PackageObject>();
 
         Builder = gameObject.AddComponent<WarehouseBuilder>();
         Builder.Initialize(this);
@@ -37,7 +37,13 @@ public class Warehouse : MonoBehaviour
         if (!playerInputs.highlightRay.detectedObject)
             textUI.text = " ";
     }
-
+    public void ClearSearch()
+    {
+        foreach (PackageObject item in packagesList)
+        {
+            item.package.isSearched = false;
+        }
+    }
     // Update is called once per frame
     void Update()
     {
