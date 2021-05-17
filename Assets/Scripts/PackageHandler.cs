@@ -28,7 +28,7 @@ public class PackageHandler : MonoBehaviour
         }
         else
         {
-            packageObject.SearchChangeColor(true);
+            packageObject.SearchChangeColor(false);
         }
         if (playerInputs.highlightRay.detectedObject && (playerInputs.highlightRay.hit.transform == packageObject.GetTransform()))
         {

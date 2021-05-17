@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -948,38 +948,7 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Sprint Finish
       m_Flags: 0
-  formOpen:
-    m_Name: Form Open
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: b975576f-9927-4409-8cb6-067055c769e8
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 95e75417-ec62-45c0-9e93-76f7e866aba1
-      m_Path: <Keyboard>/r
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Form Open
-      m_Flags: 0
-  formClose:
-    m_Name: Form Close
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: e03585bc-6f6b-4666-b5bb-ff28f0723ee5
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: d8f6e2c6-fef6-441b-83e5-7e8572af8d51
-      m_Path: <Keyboard>/escape
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Form Close
-      m_Flags: 0
+  warehouse: {fileID: 175137113}
   speed: 5
   gravity: -9.81
   mouseSensitivity: 50
@@ -990,6 +959,10 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  UI_form: {fileID: 75307621}
+  textSN: {fileID: 1742805382}
+  textSpec: {fileID: 1462547380}
+  textPCK: {fileID: 2049212701}
 --- !u!65 &460743484
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2700,7 +2673,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1588304516}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 460743478}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SendMessage
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: SendData
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1588304516
 MonoBehaviour:
   m_ObjectHideFlags: 0

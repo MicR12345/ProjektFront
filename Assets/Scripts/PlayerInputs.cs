@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,8 @@ public class PlayerInputs : MonoBehaviour
     private CharacterController controller;
 
     private Camera cam;
+
+    public Warehouse warehouse;
 
     private float camRot = 0;
 
@@ -170,7 +173,6 @@ public class PlayerInputs : MonoBehaviour
     }
     private void SendData()
     {
-        string url = "https://localhost:44374";
         string text = "https://localhost:44374/api/Package/GetPackage?";
         if(SN.text != "")
         {
@@ -192,7 +194,20 @@ public class PlayerInputs : MonoBehaviour
         {
             text = text + "package=" + PCK.text;
         }
-        Debug.Log(GetStringFromUrl(text));        
+        string packageString = GetStringFromUrl(text);
+        if (packageString != "")
+        {
+            packageString = "{\n\"packageobjects\":" + packageString + "}";
+            PackageWrapper packageobjects = JsonUtility.FromJson<PackageWrapper>(packageString);
+            foreach (PackageObject item in warehouse.packagesList)
+            {
+                if (item.package.SystemNumber == packageobjects.packageobjects[0].systemNumber && item.package.Specimen == packageobjects.packageobjects[0].specimen && item.package.Number == packageobjects.packageobjects[0].package)
+                {
+                    item.package.isSearched = true;
+                }
+            }
+        }
+        else Debug.LogError("Server Returned Nothing");
     }
     private string GetStringFromUrl(string url)
     {
@@ -200,7 +215,34 @@ public class PlayerInputs : MonoBehaviour
         string result = webClient.DownloadString(url);
         return result;
     }
-
+    [Serializable]
+    public class PackageWrapper
+    {
+        public List<PackageJSON> packageobjects;
+    }
+    [Serializable]
+    public class PackageJSON
+    {
+        public int systemNumber;
+        public int specimen;
+        public int package;
+        public string articleCode;
+        public Dimensions dimensions;
+        public Location location;
+        [Serializable]
+        public class Dimensions
+        {
+            public float height;
+            public float width;
+            public float depth;
+        }
+        [Serializable]
+        public class Location
+        {
+            public string arrangement;
+            public int id;
+        }
+    }
 }
 
 
