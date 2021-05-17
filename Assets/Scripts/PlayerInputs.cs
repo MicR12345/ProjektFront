@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
+using UnityEngine.Networking;
+using System.Net;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerInputs : MonoBehaviour
@@ -10,6 +13,8 @@ public class PlayerInputs : MonoBehaviour
     [SerializeField] private InputAction turning;
     [SerializeField] private InputAction sprintStart;
     [SerializeField] private InputAction sprintFinish;
+    
+   
 
     [System.Serializable]
     public class InputRay
@@ -41,6 +46,16 @@ public class PlayerInputs : MonoBehaviour
     Vector3 velocity;
     bool isGrounded;
 
+    bool isactiveWindow;
+
+    public GameObject UI_form;
+    public GameObject textSN;
+    public GameObject textSpec;
+    public GameObject textPCK;
+    TMP_InputField SN;
+    TMP_InputField Spec;
+    TMP_InputField PCK;
+
     private void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -53,6 +68,9 @@ public class PlayerInputs : MonoBehaviour
 
         cam = Camera.main;
         highlightRay = new InputRay();
+        SN = textSN.GetComponent<TMP_InputField>();
+        Spec = textSpec.GetComponent<TMP_InputField>();
+        PCK = textPCK.GetComponent<TMP_InputField>();
     }
 
 
@@ -118,8 +136,6 @@ public class PlayerInputs : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
-
-
     }
     private void Turn()
     {
@@ -131,6 +147,58 @@ public class PlayerInputs : MonoBehaviour
 
         cam.transform.localRotation = Quaternion.Euler(camRot, 0, 0);
         transform.Rotate(Vector3.up * mouseX);
+    }
+    private void OnOpenWindow()
+    {
+        UI_form.SetActive(true);
+        movement.Disable();
+        turning.Disable();
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+    }
+    private void OnCloseWindow()
+    {
+        UI_form.SetActive(false);
+        movement.Enable();
+        turning.Enable();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        SN.text = "";
+        Spec.text = "";
+        PCK.text = "";
+
+    }
+    private void SendData()
+    {
+        string url = "https://localhost:44374";
+        string text = "https://localhost:44374/api/Package/GetPackage?";
+        if(SN.text != "")
+        {
+            text = text +"systemNumber="+ SN.text;
+            if (PCK.text != "" || Spec.text != "")
+            {
+                text += "&";
+            }
+        }
+        if (Spec.text != "")
+        {
+            text = text + "specimen=" + Spec.text;
+            if(PCK.text != "")
+            {
+                text += "&";
+            }
+        }
+        if (PCK.text != "")
+        {
+            text = text + "package=" + PCK.text;
+        }
+        Debug.Log(GetStringFromUrl(text));        
+    }
+    private string GetStringFromUrl(string url)
+    {
+        WebClient webClient = new WebClient();
+        string result = webClient.DownloadString(url);
+        return result;
     }
 
 }
